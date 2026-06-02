@@ -1,0 +1,122 @@
+{
+  "generated_at": "2026-06-02T11:41:15.296999",
+  "model": "gemini-3.1-flash-image",
+  "total": 14,
+  "ok": 14,
+  "errors": 0,
+  "estimated_cost_usd": 0.84,
+  "images": [
+    {
+      "name": "services/gornichnye.jpg",
+      "path": "/home/timur/ai-system/projects/hpgroup-site/frontend/public/images/services/gornichnye.jpg",
+      "size_kb": 1375,
+      "elapsed_s": 27.4,
+      "mime": "image/png",
+      "status": "ok"
+    },
+    {
+      "name": "services/uborschiki.jpg",
+      "path": "/home/timur/ai-system/projects/hpgroup-site/frontend/public/images/services/uborschiki.jpg",
+      "size_kb": 1404,
+      "elapsed_s": 17.9,
+      "mime": "image/png",
+      "status": "ok"
+    },
+    {
+      "name": "services/kuhonnye.jpg",
+      "path": "/home/timur/ai-system/projects/hpgroup-site/frontend/public/images/services/kuhonnye.jpg",
+      "size_kb": 1494,
+      "elapsed_s": 25.3,
+      "mime": "image/png",
+      "status": "ok"
+    },
+    {
+      "name": "services/povara.jpg",
+      "path": "/home/timur/ai-system/projects/hpgroup-site/frontend/public/images/services/povara.jpg",
+      "size_kb": 1455,
+      "elapsed_s": 20.5,
+      "mime": "image/png",
+      "status": "ok"
+    },
+    {
+      "name": "services/posudomoyschiki.jpg",
+      "path": "/home/timur/ai-system/projects/hpgroup-site/frontend/public/images/services/posudomoyschiki.jpg",
+      "size_kb": 1506,
+      "elapsed_s": 24.5,
+      "mime": "image/png",
+      "status": "ok"
+    },
+    {
+      "name": "services/oficianty.jpg",
+      "path": "/home/timur/ai-system/projects/hpgroup-site/frontend/public/images/services/oficianty.jpg",
+      "size_kb": 1315,
+      "elapsed_s": 18.4,
+      "mime": "image/png",
+      "status": "ok"
+    },
+    {
+      "name": "services/bartendery.jpg",
+      "path": "/home/timur/ai-system/projects/hpgroup-site/frontend/public/images/services/bartendery.jpg",
+      "size_kb": 1382,
+      "elapsed_s": 26.5,
+      "mime": "image/png",
+      "status": "ok"
+    },
+    {
+      "name": "services/administratory.jpg",
+      "path": "/home/timur/ai-system/projects/hpgroup-site/frontend/public/images/services/administratory.jpg",
+      "size_kb": 1325,
+      "elapsed_s": 17.6,
+      "mime": "image/png",
+      "status": "ok"
+    },
+    {
+      "name": "cases/hotel-morning.jpg",
+      "path": "/home/timur/ai-system/projects/hpgroup-site/frontend/public/images/cases/hotel-morning.jpg",
+      "size_kb": 1332,
+      "elapsed_s": 25.7,
+      "mime": "image/png",
+      "status": "ok"
+    },
+    {
+      "name": "cases/banquet.jpg",
+      "path": "/home/timur/ai-system/projects/hpgroup-site/frontend/public/images/cases/banquet.jpg",
+      "size_kb": 1557,
+      "elapsed_s": 20.6,
+      "mime": "image/png",
+      "status": "ok"
+    },
+    {
+      "name": "cases/sochi.jpg",
+      "path": "/home/timur/ai-system/projects/hpgroup-site/frontend/public/images/cases/sochi.jpg",
+      "size_kb": 1695,
+      "elapsed_s": 25.4,
+      "mime": "image/png",
+      "status": "ok"
+    },
+    {
+      "name": "cases/opening.jpg",
+      "path": "/home/timur/ai-system/projects/hpgroup-site/frontend/public/images/cases/opening.jpg",
+      "size_kb": 1411,
+      "elapsed_s": 20.3,
+      "mime": "image/png",
+      "status": "ok"
+    },
+    {
+      "name": "cases/rooms.jpg",
+      "path": "/home/timur/ai-system/projects/hpgroup-site/frontend/public/images/cases/rooms.jpg",
+      "size_kb": 1407,
+      "elapsed_s": 22.7,
+      "mime": "image/png",
+      "status": "ok"
+    },
+    {
+      "name": "portraits/founder.jpg",
+      "path": "/home/timur/ai-system/projects/hpgroup-site/frontend/public/images/portraits/founder.jpg",
+      "size_kb": 1355,
+      "elapsed_s": 22.0,
+      "mime": "image/png",
+      "status": "ok"
+    }
+  ]
+}
