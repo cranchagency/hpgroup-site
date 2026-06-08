@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HP Group Professional — линейный персонал на смену</title>
+<!-- ════════════════════════════════════════════════════════════════════
+     SCROLL-CINEMATIC ENGINE TEMPLATE (block-snap, canvas frame-scrub)
+     CUSTOMIZE: #topbar(бренд) · #overlay .scene(заголовки) · #fleet(карточки) · :root(палитра)
+     Движок читает assets/frames.json {count,boundaries}. DURATION(JS)=скорость перехода.
+     Загрузка: первый кадр мгновенно, остальные стримятся по порядку (loadedUpTo-гейт).
+     ════════════════════════════════════════════════════════════════════ -->
+<style>
+  :root{
+    --bg:#0d0a07; --ink:#f6f1e8; --muted:#9d8f78; --gold:#c79552; --line:rgba(246,241,232,.12);
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%;overflow:hidden}
+  html{background:var(--bg)}
+  body{background:var(--bg);color:var(--ink);font-family:'Helvetica Neue',Arial,sans-serif;-webkit-font-smoothing:antialiased;
+    height:100vh;width:100vw;position:fixed;inset:0;touch-action:none}
+
+  #pin{position:fixed;inset:0;height:100vh;overflow:hidden}
+  #stage{position:fixed;inset:0;z-index:1;overflow:hidden;background:#000;will-change:left,top,width,height;border-radius:0}
+  #cine{position:absolute;inset:0;width:100%;height:100%;display:block}
+  #loading{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:6;color:var(--muted);font-size:12px;letter-spacing:.3em;text-transform:uppercase}
+
+  #vignette{position:fixed;inset:0;z-index:2;pointer-events:none;
+    background:radial-gradient(120% 90% at 50% 45%,transparent 35%,rgba(0,0,0,.55) 100%),
+               linear-gradient(180deg,rgba(0,0,0,.45) 0%,transparent 22%,transparent 58%,rgba(0,0,0,.78) 100%)}
+
+  #overlay{position:fixed;inset:0;z-index:3;pointer-events:none}
+  .scene{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;
+    padding:clamp(28px,6vw,90px);opacity:0;transform:translateY(26px);
+    transition:opacity .55s var(--ease),transform .55s var(--ease)}
+  .scene.is-on{opacity:1;transform:none}
+  .kicker{font-size:clamp(11px,1vw,13px);letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;font-weight:600}
+  .scene h1{font-size:clamp(38px,7vw,104px);line-height:.96;font-weight:800;letter-spacing:-.02em;max-width:14ch}
+  .scene h1 em{font-style:normal;color:var(--gold)}
+  .scene p{margin-top:22px;max-width:46ch;color:var(--muted);font-size:clamp(14px,1.3vw,19px);line-height:1.55}
+
+  #topbar{position:fixed;top:0;left:0;right:0;z-index:8;display:flex;align-items:center;justify-content:space-between;
+    padding:24px clamp(28px,6vw,90px);font-size:13px;letter-spacing:.18em;text-transform:uppercase;mix-blend-mode:difference;color:#fff}
+  #topbar .brand{font-weight:800;letter-spacing:.3em}
+  #topbar nav{display:flex;gap:30px;color:rgba(255,255,255,.7)}
+
+  #hint{position:fixed;left:50%;bottom:30px;transform:translateX(-50%);z-index:7;font-size:11px;letter-spacing:.3em;
+    text-transform:uppercase;color:rgba(255,255,255,.55);display:flex;flex-direction:column;align-items:center;gap:10px;transition:opacity .4s}
+  #hint .bar{width:1px;height:46px;background:linear-gradient(var(--gold),transparent);animation:drop 1.8s var(--ease) infinite}
+  @keyframes drop{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}50.1%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+  /* progress dots (4 blocks) */
+  #dots{position:fixed;right:clamp(20px,3vw,40px);top:50%;transform:translateY(-50%);z-index:8;display:flex;flex-direction:column;gap:14px}
+  #dots .d{width:7px;height:7px;border-radius:50%;background:rgba(244,241,234,.22);transition:background .3s,transform .3s}
+  #dots .d.on{background:var(--gold);transform:scale(1.5)}
+  #rail{position:fixed;top:0;left:0;height:2px;background:var(--gold);width:0;z-index:9;transition:width .25s var(--ease)}
+
+  #fleet{position:fixed;inset:0;z-index:4;background:var(--bg);display:flex;flex-direction:column;justify-content:center;
+    padding:clamp(40px,5vw,80px) clamp(28px,6vw,90px);opacity:0;pointer-events:none;transition:opacity .55s var(--ease)}
+  #fleet.is-on{opacity:1;pointer-events:auto}
+  #fleet .head{margin-bottom:34px;max-width:60ch}
+  #fleet .head .kicker{margin-bottom:14px}
+  #fleet .head h2{font-size:clamp(28px,4vw,54px);font-weight:800;letter-spacing:-.02em;line-height:1}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:1500px}
+  @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  .card{background:#0f0f0f;border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;
+    transform:translateY(24px);opacity:0;transition:transform .55s var(--ease),opacity .55s var(--ease)}
+  #fleet.is-on .card{transform:none;opacity:1}
+  #fleet.is-on .card:nth-child(2){transition-delay:.08s}
+  #fleet.is-on .card:nth-child(3){transition-delay:.16s}
+  .card.live{background:transparent;border-color:transparent;opacity:1;transform:none}
+  #card-slot{position:relative;aspect-ratio:16/10;background:#0a0a0a;border-radius:16px}
+  .card .media{aspect-ratio:16/10;width:100%;object-fit:cover;display:block;filter:brightness(.95)}
+  .card .body{padding:18px 22px 22px;display:flex;flex-direction:column;gap:12px}
+  .card .name{font-size:19px;font-weight:700;letter-spacing:-.01em}
+  .card .spec{font-size:13px;color:var(--muted);letter-spacing:.03em;margin-top:4px}
+  .card .row{display:flex;align-items:center;justify-content:space-between;margin-top:6px}
+  .card .price{font-size:21px;font-weight:800}
+  .card .price small{font-size:12px;color:var(--muted);font-weight:500}
+  .card .btn{background:var(--gold);color:#000;border:none;border-radius:999px;padding:11px 20px;font-size:13px;font-weight:700;
+    letter-spacing:.05em;cursor:pointer;transition:transform .2s var(--ease),background .2s}
+  .card .btn:hover{transform:translateY(-1px);background:#dab85f}
+  @media(prefers-reduced-motion:reduce){.scene,.card{transition:none}}
+</style>
+</head>
+<body>
+
+<div id="rail"></div>
+<header id="topbar">
+  <div class="brand">HP Group Professional</div>
+  <nav><span>Услуги</span><span>Цены</span><span>Гарантия</span><span>Контакты</span></nav>
+  <div>+7 (495) 532-01-00</div>
+</header>
+
+<div id="pin">
+  <div id="stage"><canvas id="cine"></canvas></div>
+  <div id="vignette"></div>
+  <section id="fleet">
+    <div class="head">
+      <div class="kicker">HoReCa · Повара</div>
+      <h2>Закроем смену — или не возьмём денег</h2>
+    </div>
+    <div class="grid">
+      <article class="card live"><div id="card-slot"></div>
+        <div class="body">
+          <div><div class="name">Аутсорсинг персонала</div><div class="spec">даём людей, налоги и документы — на нас</div></div>
+          <div class="row"><div class="price">от 249 <small>₽/час</small></div><button class="btn">Подробнее</button></div>
+        </div>
+      </article>
+      <article class="card"><img class="media" src="assets/keyframes/kf2-housekeeper.png" alt="HoReCa — горничные" />
+        <div class="body">
+          <div><div class="name">Аутсорсинг процессов</div><div class="spec">люди + координатор + ответственность за KPI</div></div>
+          <div class="row"><div class="price">от 340 <small>₽/час</small></div><button class="btn">Подробнее</button></div>
+        </div>
+      </article>
+      <article class="card"><img class="media" src="assets/keyframes/kf3-waiter.png" alt="HoReCa — официанты" />
+        <div class="body">
+          <div><div class="name">Кадрово-правовой консалтинг</div><div class="spec">КДП, зарплаты, проверки ФНС/ГИТ</div></div>
+          <div class="row"><div class="price">по запросу</div><button class="btn">Связаться</button></div>
+        </div>
+      </article>
+    </div>
+  </section>
+</div>
+
+<div id="overlay">
+  <div class="scene" data-scene="0">
+    <div class="kicker">HP Group · 10 лет в аутсорсинге</div>
+    <h1>Линейный<br>персонал — на<br><em>смену уже завтра</em></h1>
+    <p>16+ профессий. Один договор с юр.лицом. Отели, рестораны, склады, магазины. От 249 ₽/час.</p>
+  </div>
+  <div class="scene" data-scene="1">
+    <div class="kicker">HoReCa · Горничные</div>
+    <h1>Заправят 18&nbsp;номеров<br>за смену — без <em>срыва заезда</em></h1>
+    <p>Граждане РФ, медкнижка, форма, обучение под стандарт отеля. Замена в течение смены при отказе.</p>
+  </div>
+  <div class="scene" data-scene="2">
+    <div class="kicker">HoReCa · Официанты</div>
+    <h1>Закроют банкет<br>и свадебный <em>сезон</em></h1>
+    <p>Опыт от 6 месяцев, знание ПО зала, униформа от нас. От 1 человека × 1 смена — масштабируем до 35.</p>
+  </div>
+</div>
+
+<div id="dots"><div class="d on"></div><div class="d"></div><div class="d"></div><div class="d"></div></div>
+<div id="hint"><span>Скролл</span><div class="bar"></div></div>
+<div id="loading">загрузка синематика…</div>
+
+<script>
+/* ─────────────────────────────────────────────────────────────
+   DUBAI SUPERCAR — block-snap cinematic.
+   Scroll/wheel/swipe is a TRIGGER, not a scrubber: one gesture
+   auto-plays the transition between two keyframe anchors over a
+   fixed duration with easing, then locks at the next block.
+   Frames: assets/frames/frame-XXXX.avif (3 chained Veo clips).
+   ───────────────────────────────────────────────────────────── */
+const cv=document.getElementById('cine'), ctx=cv.getContext('2d',{alpha:false});
+const stage=document.getElementById('stage'), cardSlot=document.getElementById('card-slot');
+const fleet=document.getElementById('fleet'), rail=document.getElementById('rail'), hint=document.getElementById('hint');
+const loadingEl=document.getElementById('loading'), scenes=[...document.querySelectorAll('.scene')];
+const dots=[...document.querySelectorAll('#dots .d')];
+
+const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
+const lerp=(a,b,t)=>a+(b-a)*t;
+const easeIO=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+
+const DURATION=1500;          // ms per block-to-block transition (set speed)
+let N=0, anchors=[], frames=[], ready=false, currentIdx=-1;
+let block=0, playing=false, morphT=0;
+let loadedUpTo=-1, pendingDir=0, EXT='avif';
+
+function resize(){
+  const dpr=Math.min(window.devicePixelRatio||1,2);
+  const r=stage.getBoundingClientRect();
+  cv.width=Math.round(r.width*dpr); cv.height=Math.round(r.height*dpr);
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  if(currentIdx>=0) draw(currentIdx,true);
+}
+function draw(idx,force){
+  idx=clamp(idx,0,N-1)|0;
+  if(idx===currentIdx&&!force) return;
+  const img=frames[idx]; if(!img||!img.complete||!img.naturalWidth) return;
+  const cw=cv.clientWidth||stage.clientWidth, ch=cv.clientHeight||stage.clientHeight;
+  const iw=img.naturalWidth, ih=img.naturalHeight, s=Math.max(cw/iw,ch/ih);
+  const dw=iw*s, dh=ih*s;
+  ctx.fillStyle='#000'; ctx.fillRect(0,0,cw,ch);
+  ctx.drawImage(img,(cw-dw)/2,(ch-dh)/2,dw,dh);
+  currentIdx=idx;
+}
+
+function showScene(i){ scenes.forEach(s=>s.classList.toggle('is-on', i>=0 && +s.dataset.scene===i)); }
+function applyMorph(mt){
+  morphT=mt;
+  if(mt<=0.001){ stage.style.inset='0';stage.style.left='';stage.style.top='';stage.style.width='';stage.style.height='';
+    stage.style.borderRadius='0';stage.style.zIndex='1'; fleet.classList.remove('is-on'); resize(); return; }
+  const t=easeIO(mt), r=cardSlot.getBoundingClientRect();
+  fleet.classList.add('is-on');
+  stage.style.zIndex='5'; stage.style.inset='auto';
+  stage.style.left=lerp(0,r.left,t)+'px'; stage.style.top=lerp(0,r.top,t)+'px';
+  stage.style.width=lerp(innerWidth,r.width,t)+'px'; stage.style.height=lerp(innerHeight,r.height,t)+'px';
+  stage.style.borderRadius=lerp(0,16,t)+'px'; resize();
+}
+function setRail(){ rail.style.width=(block/3*100)+'%'; dots.forEach((d,i)=>d.classList.toggle('on',i===block)); }
+function settle(b){
+  block=b; playing=false;
+  draw(anchors[b],true);
+  applyMorph(b===3?1:0);
+  showScene(b<3?b:-1);
+  setRail();
+}
+
+/* play a transition from block `from` to block `to` over DURATION */
+function play(from,to){
+  playing=true; hint.style.opacity='0'; showScene(-1);
+  const f0=anchors[from], f1=anchors[to];
+  const involvesCards = (from===3||to===3);
+  const m0 = from===3?1:0, m1 = to===3?1:0;
+  const t0=performance.now();
+  function step(now){
+    const t=clamp((now-t0)/DURATION), e=easeIO(t);
+    draw(lerp(f0,f1,e));
+    if(involvesCards) applyMorph(lerp(m0,m1,e));
+    rail.style.width=(lerp(from,to,e)/3*100)+'%';
+    if(t<1){ requestAnimationFrame(step); }
+    else { settle(to); }
+  }
+  requestAnimationFrame(step);
+}
+
+function go(dir){               // dir: +1 next, -1 prev
+  if(playing||!ready) return;
+  const to=block+dir;
+  if(to<0||to>3) return;
+  // gate forward transitions until their frames have streamed in
+  if(anchors[to]>loadedUpTo){ pendingDir=dir; loadingEl.textContent='…'; loadingEl.style.display='block'; return; }
+  loadingEl.style.display='none';
+  play(block,to);
+}
+
+/* ── input: wheel / keys / touch as discrete triggers ── */
+let wheelLock=false;
+addEventListener('wheel',(e)=>{
+  e.preventDefault();
+  if(playing||wheelLock) return;
+  if(Math.abs(e.deltaY)<8) return;
+  wheelLock=true; setTimeout(()=>wheelLock=false, DURATION+250);
+  go(e.deltaY>0?1:-1);
+},{passive:false});
+
+addEventListener('keydown',(e)=>{
+  if(['ArrowDown','PageDown',' ','ArrowRight'].includes(e.key)){ e.preventDefault(); go(1); }
+  else if(['ArrowUp','PageUp','ArrowLeft'].includes(e.key)){ e.preventDefault(); go(-1); }
+});
+
+let touchY=null;
+addEventListener('touchstart',(e)=>{ touchY=e.touches[0].clientY; },{passive:true});
+addEventListener('touchmove',(e)=>{ e.preventDefault(); },{passive:false});
+addEventListener('touchend',(e)=>{
+  if(touchY===null||playing) return;
+  const dy=touchY-(e.changedTouches[0].clientY); touchY=null;
+  if(Math.abs(dy)>40) go(dy>0?1:-1);
+});
+
+addEventListener('resize',()=>{ if(!playing){ applyMorph(block===3?1:0); } resize(); });
+
+/* ── load manifest + frames ── */
+const pad=n=>String(n).padStart(4,'0');
+function loadOne(i){
+  return new Promise(res=>{
+    if(frames[i]&&frames[i]._ok) return res();
+    const im=new Image();
+    im.onload=()=>{ im._ok=true; frames[i]=im; res(); };
+    im.onerror=()=>res();
+    im.src=`assets/frames/frame-${pad(i+1)}.${EXT}`;
+    frames[i]=im;
+  });
+}
+async function boot(){
+  try{
+    const m=await (await fetch('assets/frames.json',{cache:'no-store'})).json();
+    N=m.count; EXT=m.ext||'avif'; const b=m.boundaries; anchors=[0,b[1]-1,b[2]-1,N-1];
+    frames=new Array(N);
+    // 1) paint the very first frame ASAP — hero visible almost instantly
+    await loadOne(0);
+    loadedUpTo=0; ready=true; loadingEl.style.display='none'; resize(); settle(0);
+    // 2) stream the rest IN ORDER, small concurrency — transitions become
+    //    available progressively; a gated go() auto-fires once its range is in
+    const C=8;
+    for(let i=1;i<N;i+=C){
+      const end=Math.min(N,i+C);
+      await Promise.all(Array.from({length:end-i},(_,k)=>loadOne(i+k)));
+      loadedUpTo=end-1;
+      if(pendingDir){
+        const to=block+pendingDir;
+        if(to>=0&&to<=3 && anchors[to]<=loadedUpTo){ pendingDir=0; loadingEl.style.display='none'; play(block,to); }
+      }
+    }
+    loadedUpTo=N-1;
+  }catch(e){ loadingEl.textContent='кадры ещё не готовы'; }
+}
+boot();
+</script>
+</body>
+</html>
