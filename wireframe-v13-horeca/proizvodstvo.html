@@ -42,7 +42,16 @@
     <div class="right">
       <a href="tel:+79260505155" class="phone">+7 (926) 05-05-155</a>
       <a href="index.html#contacts" class="btn small">Заявка</a>
+      <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
+  </div>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="index.html#dolzhnosti">Должности</a>
+    <a href="index.html#cases">Кейсы</a>
+    <a href="autstaffing.html">Аутстаффинг</a>
+    <a href="proizvodstvo.html" class="active">Производство и склады</a>
+    <a href="index.html#contacts">Контакты</a>
+    <a href="tel:+79260505155" class="mm-phone">+7 (926) 05-05-155</a>
   </div>
 </header>
 
@@ -120,5 +129,19 @@
   </div>
 </footer>
 
+<script>
+(function() {
+  const burger = document.getElementById('burger');
+  const menu = document.getElementById('mobile-menu');
+  if (!burger || !menu) return;
+  const close = () => { burger.classList.remove('open'); menu.classList.remove('open'); burger.setAttribute('aria-expanded','false'); };
+  burger.addEventListener('click', () => {
+    const open = menu.classList.toggle('open');
+    burger.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+})();
+</script>
 </body>
 </html>

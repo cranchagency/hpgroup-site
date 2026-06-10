@@ -147,6 +147,32 @@ header.site .phone { font-family: var(--font-mono); font-size: 13.5px; font-weig
 @media (max-width: 1060px) { header.site nav { display: none; } }
 @media (max-width: 560px) { header.site .phone { display: none; } }
 
+/* ── Бургер + мобильное меню (≤1060px) ── */
+.burger { display: none; width: 42px; height: 42px; border: 0; background: transparent;
+  cursor: pointer; flex-direction: column; justify-content: center; align-items: center; gap: 5px; padding: 0; }
+.burger span { display: block; width: 24px; height: 2px; background: var(--ink); border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.2s ease; }
+header.site.on-dark .burger span { background: var(--cream); }
+.burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.burger.open span:nth-child(2) { opacity: 0; }
+.burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.mobile-menu {
+  display: none; flex-direction: column;
+  background: var(--paper); border-top: 1px solid rgba(15,16,17,0.08);
+  padding: 8px 0; max-height: 0; overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+.mobile-menu.open { max-height: 70vh; }
+.mobile-menu a { padding: 15px clamp(20px,5vw,40px); color: var(--ink); text-decoration: none;
+  font-size: 16px; font-weight: 600; border-bottom: 1px solid rgba(15,16,17,0.05); transition: background 0.2s, color 0.2s; }
+.mobile-menu a:last-child { border-bottom: 0; }
+.mobile-menu a:active, .mobile-menu a:hover { background: rgba(184,118,60,0.08); color: var(--copper); }
+.mobile-menu .mm-phone { font-family: var(--font-mono); color: var(--copper); }
+@media (max-width: 1060px) {
+  .burger { display: flex; }
+  .mobile-menu { display: flex; }
+}
+
 /* ── Logo wall (marquee) ── */
 .logowall { padding: 56px 0; background: var(--cream); overflow: hidden; }
 .logowall .lw-cap { text-align: center; font-family: var(--font-mono); font-size: 12px;
@@ -438,25 +464,49 @@ footer.site .f-legal {
   display: flex; flex-wrap: wrap; gap: 8px 32px; justify-content: space-between;
 }
 
-/* ── Hover-анимации (мягкий scale картинок внутри карточек) ── */
-.case .ca-img img, .role-block .r-img img, .pain .p-img img {
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+/* ── Hover-анимации: подъём всей карточки (lift + тень) + зум картинки ── */
+.case, .role-block, .pain, .step {
+  transition: transform 0.45s cubic-bezier(0.16,1,0.3,1), box-shadow 0.45s cubic-bezier(0.16,1,0.3,1);
 }
-.case:hover .ca-img img, .role-block:hover .r-img img { transform: scale(1.045); }
-.pain:hover .p-img img { transform: scale(1.035); }
-.rr-chip { transition: background 0.25s ease-out; }
-.rr-chip:hover { background: rgba(184,118,60,0.14); }
-.std { transition: background 0.3s ease-out; }
+.case .ca-img img, .role-block .r-img img, .pain .p-img img {
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.case:hover, .role-block:hover, .pain:hover, .step:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 26px 60px -28px rgba(15,16,17,0.42);
+}
+.case:hover .ca-img img, .role-block:hover .r-img img { transform: scale(1.07); }
+.pain:hover .p-img img { transform: scale(1.06); }
+/* кейс на тёмном фоне — тень теплее/глубже */
+.case.featured:hover { box-shadow: 0 30px 70px -26px rgba(0,0,0,0.6); }
+
+.rr-chip { transition: background 0.25s ease-out, transform 0.25s ease-out; }
+.rr-chip:hover { background: rgba(184,118,60,0.16); transform: translateY(-2px); }
+.std { transition: background 0.3s ease-out, transform 0.35s cubic-bezier(0.16,1,0.3,1); }
+.std:hover { transform: translateY(-4px); }
 section.dark .std:not(.hero-std):hover { background: rgba(245,242,236,0.09); }
+.guar { transition: transform 0.35s cubic-bezier(0.16,1,0.3,1); }
+.guar:hover { transform: translateX(4px); }
 .faq-item summary { transition: color 0.2s ease-out; }
 .faq-item summary:hover { color: var(--copper-dark); }
-.guar .ico-badge, .std .ico-badge, .as-card .ico-badge { transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
-.guar:hover .ico-badge, .std:hover .ico-badge, .as-card:hover .ico-badge { transform: translateY(-3px); }
+.guar .ico-badge, .std .ico-badge, .as-card .ico-badge { transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+.guar:hover .ico-badge, .std:hover .ico-badge, .as-card:hover .ico-badge { transform: translateY(-3px) scale(1.06); }
 .marquee:hover .track { animation-play-state: paused; }
 
 /* ── Reveal on scroll ── */
 .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.5s ease-out, transform 0.5s ease-out; }
 .reveal.in { opacity: 1; transform: none; }
+
+/* ВАЖНО: hover-lift объявлен ПОСЛЕ .reveal.in — иначе `.reveal.in { transform: none }`
+   (равная специфичность, объявлен позже) гасит подъём карточки. Здесь он побеждает каскад. */
+.case, .role-block, .pain, .step {
+  transition: opacity 0.5s ease-out, transform 0.45s cubic-bezier(0.16,1,0.3,1), box-shadow 0.45s cubic-bezier(0.16,1,0.3,1);
+}
+.case:hover, .role-block:hover, .pain:hover, .step:hover { transform: translateY(-8px); }
+.std { transition: background 0.3s ease-out, opacity 0.5s ease-out, transform 0.35s cubic-bezier(0.16,1,0.3,1); }
+.std:hover { transform: translateY(-4px); }
+.guar { transition: opacity 0.5s ease-out, transform 0.35s cubic-bezier(0.16,1,0.3,1); }
+.guar:hover { transform: translateX(4px); }
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
   * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important;
