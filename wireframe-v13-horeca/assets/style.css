@@ -171,14 +171,20 @@ header.site .phone { font-family: var(--font-mono); font-size: 13.5px; font-weig
   .marquee .track[aria-hidden="true"] { display: none; }
 }
 
-/* ── Expertise ── */
-.expertise-grid { display: grid; grid-template-columns: 1.25fr 1fr; gap: 80px; align-items: start; }
+/* ── Expertise: узкая текст-колонка + sticky инфографика со staggered-сеткой ── */
+.expertise-grid { display: grid; grid-template-columns: minmax(0, 500px) 1fr; gap: 96px; align-items: start; }
 @media (max-width: 960px) { .expertise-grid { grid-template-columns: 1fr; gap: 48px; } }
-.exp-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-top: 2px solid var(--ink); }
-.exp-stat { padding: 28px 24px 28px 0; border-bottom: 1px solid var(--grey-200); }
-.exp-stat .es-num { font-family: var(--font-mono); font-size: 52px; font-weight: 700; line-height: 1; letter-spacing: -0.03em; }
-.exp-stat .es-num sub { font-size: 20px; vertical-align: baseline; }
-.exp-stat .es-lbl { font-size: 14px; color: var(--grey-500); margin-top: 12px; line-height: 1.45; }
+.exp-stats {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0 36px;
+  position: sticky; top: 110px;
+}
+@media (max-width: 960px) { .exp-stats { position: static; } }
+.exp-stat { padding: 32px 0; border-top: 2px solid var(--ink); }
+.exp-stat:nth-child(even) { transform: translateY(36px); }
+@media (max-width: 960px) { .exp-stat:nth-child(even) { transform: none; } }
+.exp-stat .es-num { font-family: var(--font-mono); font-size: clamp(56px, 5.5vw, 84px); font-weight: 700; line-height: 1; letter-spacing: -0.04em; }
+.exp-stat .es-num sub { font-size: 24px; vertical-align: baseline; }
+.exp-stat .es-lbl { font-size: 15px; color: var(--grey-500); margin-top: 14px; line-height: 1.45; }
 .exp-brands { margin-top: 36px; padding-top: 28px; border-top: 1px solid var(--grey-200); }
 .exp-brands .eb-cap { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em;
   text-transform: uppercase; color: var(--grey-500); margin-bottom: 14px; }
@@ -246,8 +252,15 @@ header.site .phone { font-family: var(--font-mono); font-size: 13.5px; font-weig
   font-size: 15.5px; font-weight: 600;
 }
 .rr-chip .rate { font-family: var(--font-mono); font-size: 13.5px; color: var(--grey-500); }
-.roles-note { margin-top: 28px; font-size: 15px; color: var(--grey-500); max-width: 72ch; }
+.roles-note {
+  display: flex; gap: 20px; align-items: flex-start;
+  margin-top: 32px; padding: 26px 30px;
+  background: rgba(184,118,60,0.08); border-radius: 12px;
+}
+.roles-note p { font-size: 15px; color: var(--grey-700); max-width: 76ch; }
 .roles-note b { color: var(--ink); }
+.roles-note .rn-ico { width: 44px; height: 44px; font-size: 22px; background: rgba(184,118,60,0.16); }
+@media (max-width: 600px) { .roles-note { flex-direction: column; padding: 20px; } }
 
 /* ── Standard (фильтр качества, dark) ── */
 .std-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; margin-top: 64px; }
@@ -425,12 +438,29 @@ footer.site .f-legal {
   display: flex; flex-wrap: wrap; gap: 8px 32px; justify-content: space-between;
 }
 
+/* ── Hover-анимации (мягкий scale картинок внутри карточек) ── */
+.case .ca-img img, .role-block .r-img img, .pain .p-img img {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.case:hover .ca-img img, .role-block:hover .r-img img { transform: scale(1.045); }
+.pain:hover .p-img img { transform: scale(1.035); }
+.rr-chip { transition: background 0.25s ease-out; }
+.rr-chip:hover { background: rgba(184,118,60,0.14); }
+.std { transition: background 0.3s ease-out; }
+section.dark .std:not(.hero-std):hover { background: rgba(245,242,236,0.09); }
+.faq-item summary { transition: color 0.2s ease-out; }
+.faq-item summary:hover { color: var(--copper-dark); }
+.guar .ico-badge, .std .ico-badge, .as-card .ico-badge { transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+.guar:hover .ico-badge, .std:hover .ico-badge, .as-card:hover .ico-badge { transform: translateY(-3px); }
+.marquee:hover .track { animation-play-state: paused; }
+
 /* ── Reveal on scroll ── */
 .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.5s ease-out, transform 0.5s ease-out; }
 .reveal.in { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
-  * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+  * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important; }
 }
 
 /* ── Subpage hero (производство / аутстаффинг) ── */

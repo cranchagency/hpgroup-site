@@ -31,7 +31,7 @@
      при скролле stage разворачивается из этого rect в fullscreen. */
   .hero-frame {
     flex: 0 0 auto;
-    margin-top: clamp(24px, 4vh, 56px);
+    margin-top: clamp(48px, 8vh, 104px);
     padding: 0 40px;
     display: flex; align-items: flex-start; justify-content: center;
     will-change: transform, opacity;
@@ -41,18 +41,15 @@
     width: 100%; max-width: 1200px;
     aspect-ratio: 16 / 9; height: auto;
     background: var(--cine-bg);
-    border-radius: 12px;
-    box-shadow: 0 30px 80px rgba(15,16,17,0.3);
     overflow: hidden;
   }
-  #cine-placeholder img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0.9; }
+  #cine-placeholder img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .cine-stage {
     position: absolute;
     background: var(--cine-bg);
-    overflow: hidden; border-radius: 12px;
-    box-shadow: 0 30px 80px rgba(15,16,17,0.3);
+    overflow: hidden;
     z-index: 6; transform: translateZ(0);
-    will-change: left, top, width, height, border-radius;
+    will-change: left, top, width, height;
     pointer-events: none;
   }
   .cine-stage canvas { display: block; width: 100%; height: 100%; }
@@ -71,9 +68,10 @@
   }
   .cine-overlay .scene.is-on { opacity: 1; transform: none; }
   .cine-overlay .scene .kicker {
-    font-family: var(--font-mono); color: var(--copper);
+    font-family: var(--font-mono); color: #fff;
     font-size: 12px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase;
     margin-bottom: 18px; display: block;
+    text-shadow: 0 1px 12px rgba(0,0,0,0.45);
   }
   .cine-overlay .scene h2 {
     font-size: clamp(32px, 4.6vw, 66px); font-weight: 800; line-height: 1.05;
@@ -149,12 +147,12 @@
       <div class="scene" data-scene="0">
         <span class="kicker">HPGroup Professional</span>
         <h2>Персонал для отелей.<br>Запуск — 3 дня.</h2>
-        <p class="sub">350+ проверенных кандидатов в резерве: кухня, хаускипинг, зал. Один договор.</p>
+        <p class="sub">350+ проверенных кандидатов в резерве: кухня, хаускипинг, зал. Один договор.</p>
       </div>
       <div class="scene" data-scene="1">
         <span class="kicker">Хаускипинг</span>
         <h2>Горничные с опытом<br>отелей 4–5★</h2>
-        <p class="sub">Горничные и уборщицы с опытом отелей Москвы и МО. Заезд любого объёма, контроль выхода каждой смены.</p>
+        <p class="sub">Горничные и уборщицы с опытом отелей Москвы и МО. Заезд любого объёма, контроль выхода каждой смены.</p>
       </div>
       <div class="scene" data-scene="2">
         <span class="kicker">Зал и сервис</span>
@@ -210,18 +208,18 @@
       <div class="reveal">
         <span class="eyebrow">Экспертность</span>
         <h2>10 лет опыта в&nbsp;подборе персонала для отелей</h2>
-        <p class="lead" style="margin-top:28px;">HPGroup 10 лет подбирает линейный персонал для отелей Москвы и&nbsp;Подмосковья, в том числе для Radisson Hotel Group, ACCOR и&nbsp;Cosmos Hotel Group. Мы знаем требования международных сетей: от регламента уборки номера до санитарных норм кухни.</p>
-        <p style="margin-top:20px;">Наша основная специализация — <b>кухня</b> и <b>хаускипинг</b>. В базе — повара с подтверждённым ресторанным опытом и горничные со стажем в сетевых отелях. По этим позициям нас и рекомендуют.</p>
+        <p class="lead" style="margin-top:28px;">HPGroup 10 лет подбирает линейный персонал для отелей Москвы и&nbsp;Подмосковья, в том числе для Radisson Hotel Group, ACCOR и&nbsp;Cosmos Hotel Group. Мы знаем требования международных сетей: от регламента уборки номера до санитарных норм кухни.</p>
+        <p style="margin-top:20px;">Наша основная специализация — <b>кухня</b> и <b>хаускипинг</b>. В базе — повара с подтверждённым ресторанным опытом и горничные со стажем в сетевых отелях. По этим позициям нас и рекомендуют.</p>
         <div class="exp-brands">
           <div class="eb-cap">Работали со стандартами</div>
           <div class="eb-row">Radisson Hotel Group · ACCOR · Cosmos Hotel Group</div>
         </div>
       </div>
       <div class="exp-stats reveal">
-        <div class="exp-stat"><div class="es-num">10</div><div class="es-lbl">лет опыта в подборе персонала для отелей</div></div>
-        <div class="exp-stat"><div class="es-num">3<sub>&nbsp;дня</sub></div><div class="es-lbl">на запуск проекта любой сложности</div></div>
-        <div class="exp-stat"><div class="es-num">350+</div><div class="es-lbl">кандидатов в резерве: кухня, хаускипинг, зал</div></div>
-        <div class="exp-stat"><div class="es-num">24<sub>/7</sub></div><div class="es-lbl">на связи: координатор отвечает в любое время</div></div>
+        <div class="exp-stat"><div class="es-num"><span class="cnt" data-count="10">10</span></div><div class="es-lbl">лет опыта в подборе персонала для отелей</div></div>
+        <div class="exp-stat"><div class="es-num"><span class="cnt" data-count="3">3</span><sub>&nbsp;дня</sub></div><div class="es-lbl">на запуск проекта любой сложности</div></div>
+        <div class="exp-stat"><div class="es-num"><span class="cnt" data-count="350" data-suffix="+">350+</span></div><div class="es-lbl">кандидатов в резерве: кухня, хаускипинг, зал</div></div>
+        <div class="exp-stat"><div class="es-num"><span class="cnt" data-count="24" data-suffix="/7">24/7</span></div><div class="es-lbl">на связи: координатор отвечает в любое время</div></div>
       </div>
     </div>
   </div>
@@ -232,34 +230,34 @@
   <div class="container">
     <span class="eyebrow reveal">Проблемы, которые решаем</span>
     <h2 class="reveal">Две главные проблемы отеля: кухня и хаускипинг</h2>
-    <p class="lead reveal">Здесь нехватка людей сильнее всего отражается на сервисе. Решаем обе.</p>
+    <p class="lead reveal">Здесь нехватка людей сильнее всего отражается на сервисе. Решаем обе.</p>
     <div class="pains">
       <article class="pain reveal">
         <div class="p-img">
-          <img src="../wireframe-v9-cinematic-russian/assets/frames/frame-0574.avif" alt="Повар на кухне ресторана при отеле" loading="lazy">
+          <img src="assets/img/pain-kitchen.avif" alt="Повар на кухне ресторана при отеле" loading="lazy">
           <span class="p-tag">Боль 01 · Кухня</span>
         </div>
         <div class="p-body">
           <div class="p-q">Су-шеф уволился в пятницу, а в субботу банкет на 200 персон?</div>
-          <p class="p-a">Выводим повара нужного цеха без срыва банкета. Каждый кандидат прошёл первичный отбор и работал в ресторанной линии: мы не отправляем «всех подряд», как это делает массовый подбор.</p>
+          <p class="p-a">Выводим повара нужного цеха без срыва банкета. Каждый кандидат прошёл отбор и работал в ресторанной линии, а не пришёл с массового подбора.</p>
           <ul class="p-points">
             <li>Универсалы, горячий и холодный цех, сушисты, мангальщики, кондитеры</li>
-            <li>Текучка: сотрудник ушёл через две недели? Замена выходит без паузы в работе кухни</li>
-            <li>Вы не тратите бюджет на рекламу вакансий: ищем своими ресурсами</li>
+            <li>Текучка: сотрудник ушёл через две недели? Замена выходит без паузы в работе кухни</li>
+            <li>Вы не тратите бюджет на рекламу вакансий: ищем своими ресурсами</li>
           </ul>
         </div>
       </article>
       <article class="pain reveal">
         <div class="p-img">
-          <img src="../wireframe-v9-cinematic-russian/assets/frames/frame-0192.avif" alt="Горничная в номере пятизвёздочного отеля" loading="lazy">
+          <img src="assets/img/pain-housekeeping.avif" alt="Горничная в номере пятизвёздочного отеля" loading="lazy">
           <span class="p-tag">Боль 02 · Хаускипинг</span>
         </div>
         <div class="p-body">
           <div class="p-q">Заезд на 120 номеров, а три горничные разом на больничном?</div>
-          <p class="p-a">Подаём замену к началу смены. Горничные с опытом сетевых отелей проходят инструктаж под стандарт уборки вашего объекта до выхода на этаж.</p>
+          <p class="p-a">Подаём замену к началу смены. Горничные с опытом сетевых отелей проходят инструктаж под стандарт уборки вашего объекта до выхода на этаж.</p>
           <ul class="p-points">
-            <li>Горничные, уборщицы, хаусмены, стюарды: целые смены или точечное усиление</li>
-            <li>Контроль выхода на точку: координатор отмечает каждую смену</li>
+            <li>Горничные, уборщицы, хаусмены, стюарды: целые смены или точечное усиление</li>
+            <li>Контроль выхода на точку: координатор отмечает каждую смену</li>
             <li>Форс-мажор «сотрудник нужен уже вчера»: помогаем с экстренными вызовами</li>
           </ul>
         </div>
@@ -273,13 +271,13 @@
   <div class="container">
     <span class="eyebrow reveal">Должности и ставки</span>
     <h2 class="reveal">Кого мы выводим на объект</h2>
-    <p class="lead reveal">Два блока, где наша экспертиза подбора сильнее всего, и остальные отельные позиции.</p>
+    <p class="lead reveal">Два блока, где наша экспертиза подбора сильнее всего, и остальные отельные позиции.</p>
     <div class="roles-grid">
       <article class="role-block reveal">
-        <div class="r-img"><img src="../wireframe-v9-cinematic-russian/assets/frames/frame-0500.avif" alt="Кухня ресторана при отеле" loading="lazy"></div>
+        <div class="r-img"><img src="assets/img/role-kitchen.avif" alt="Кухня ресторана при отеле" loading="lazy"></div>
         <div class="r-body">
           <div class="r-head"><h3>Кухня</h3><span class="r-exp">экспертный фокус</span></div>
-          <p class="r-sub">Повара с подтверждённым ресторанным опытом: собеседуем по профилю цеха, проверяем навыки до выхода.</p>
+          <p class="r-sub">Повара с подтверждённым ресторанным опытом: собеседуем по профилю цеха, проверяем навыки до выхода.</p>
           <ul class="role-list">
             <li>Повара-универсалы <span class="rate">от <b>455 ₽</b>/час</span></li>
             <li>Повара горячего и холодного цеха <span class="rate">от <b>455 ₽</b>/час</span></li>
@@ -291,10 +289,10 @@
         </div>
       </article>
       <article class="role-block reveal">
-        <div class="r-img"><img src="../wireframe-v9-cinematic-russian/assets/frames/frame-0150.avif" alt="Хаускипинг: подготовка номера отеля" loading="lazy"></div>
+        <div class="r-img"><img src="assets/img/role-housekeeping.avif" alt="Хаускипинг: подготовка номера отеля" loading="lazy"></div>
         <div class="r-body">
           <div class="r-head"><h3>Хаускипинг</h3><span class="r-exp">экспертный фокус</span></div>
-          <p class="r-sub">Горничные и уборщицы со стажем в сетевых отелях 4–5★. Инструктаж под стандарт уборки вашего объекта.</p>
+          <p class="r-sub">Горничные и уборщицы со стажем в сетевых отелях 4–5★. Инструктаж под стандарт уборки вашего объекта.</p>
           <ul class="role-list">
             <li>Горничные <span class="rate">от <b>435 ₽</b>/час</span></li>
             <li>Уборщицы <span class="rate">от <b>430 ₽</b>/час</span></li>
@@ -306,7 +304,7 @@
       <div class="roles-rest reveal">
         <div>
           <h3 style="margin-bottom:8px;">Остальные отельные должности</h3>
-          <p style="font-size:15px;color:var(--grey-500);">Зал, бар и поддержка операций: закрываем вместе с основными блоками или отдельно.</p>
+          <p style="font-size:15px;color:var(--grey-500);">Зал, бар и поддержка операций: закрываем вместе с основными блоками или отдельно.</p>
         </div>
         <div class="rr-roles">
           <span class="rr-chip">Официанты <span class="rate">от 445 ₽/час</span></span>
@@ -316,7 +314,7 @@
         </div>
       </div>
     </div>
-    <p class="roles-note reveal">Ставка включает зарплату сотрудника, НДФЛ и взносы, медкнижку, спецодежду, подбор и замену. <b>Сделаем предложение точно под ваш объект:</b> пришлите список позиций, и вернёмся с расчётом в течение рабочего дня.</p>
+    <div class="roles-note reveal"><span class="ico-badge rn-ico"><i class="ph ph-info"></i></span><p>Ставка включает зарплату сотрудника, НДФЛ и взносы, медкнижку, спецодежду, подбор и замену. <b>Сделаем предложение точно под ваш объект:</b> пришлите список позиций, и вернёмся с расчётом в течение рабочего дня.</p></div>
   </div>
 </section>
 
@@ -350,13 +348,13 @@
         <span class="ico-badge"><i class="ph ph-chats-circle"></i></span>
         <span class="s-k">Сопровождение</span>
         <h3>Текучка — наша задача, не ваша</h3>
-        <p>Работаем с мотивацией сотрудников. Координатор сопровождает людей на объекте, контролирует выход каждой смены и при выбытии даёт замену.</p>
+        <p>Работаем с мотивацией сотрудников. Координатор сопровождает людей на объекте, контролирует выход каждой смены и при выбытии даёт замену.</p>
       </div>
       <div class="std reveal">
         <span class="ico-badge"><i class="ph ph-house-line"></i></span>
         <span class="s-k">Ответственность</span>
         <h3>Страховка и проживание</h3>
-        <p>Форс-мажоры с персоналом на объекте застрахованы. При необходимости берём на себя вопрос проживания сотрудников рядом с вашим объектом.</p>
+        <p>Форс-мажоры с персоналом на объекте застрахованы. При необходимости берём на себя вопрос проживания сотрудников рядом с вашим объектом.</p>
       </div>
     </div>
   </div>
@@ -371,7 +369,7 @@
       <div class="guar reveal">
         <span class="ico-badge"><i class="ph ph-shield-check"></i></span>
         <h3>Гарантия предоставления персонала</h3>
-        <p>С момента старта проекта не будет ни одного дня, когда на вашем объекте нет персонала. Резерв в 350+ кандидатов держит смены закрытыми.</p>
+        <p>С момента старта проекта не будет ни одного дня, когда на вашем объекте нет персонала. Резерв в 350+ кандидатов держит смены закрытыми.</p>
       </div>
       <div class="guar reveal">
         <span class="ico-badge"><i class="ph ph-receipt"></i></span>
@@ -381,17 +379,17 @@
       <div class="guar reveal">
         <span class="ico-badge"><i class="ph ph-list-checks"></i></span>
         <h3>Сопровождение и контроль выхода</h3>
-        <p>Координатор контролирует выход персонала на точку и сопровождает людей в процессе работы: проблемы решаются до того, как их заметят гости.</p>
+        <p>Координатор контролирует выход персонала на точку и сопровождает людей в процессе работы: проблемы решаются до того, как их заметят гости.</p>
       </div>
       <div class="guar reveal">
         <span class="ico-badge"><i class="ph ph-bank"></i></span>
         <h3>Налоги и выплаты — на нас</h3>
-        <p>НДФЛ и выплаты в социальные фонды за персонал производит наша компания. Для вас это ставка, умноженная на часы, и ничего сверху.</p>
+        <p>НДФЛ и выплаты в социальные фонды за персонал производит наша компания. Для вас это ставка, умноженная на часы, и ничего сверху.</p>
       </div>
       <div class="guar reveal">
         <span class="ico-badge"><i class="ph ph-clipboard-text"></i></span>
         <h3>Соблюдение регламентов вашего объекта</h3>
-        <p>Сотрудники проинструктированы о внутренних правилах предприятия до первого выхода: от пропускного режима до стандартов общения с гостями.</p>
+        <p>Сотрудники проинструктированы о внутренних правилах предприятия до первого выхода: от пропускного режима до стандартов общения с гостями.</p>
       </div>
     </div>
   </div>
@@ -404,9 +402,9 @@
     <h2 class="reveal">От заявки до первой смены — 3 дня</h2>
     <div class="steps">
       <div class="step reveal"><i class="ph ph-phone s-ico"></i><div class="s-day">День 1</div><h4>Заявка и бриф</h4><p>Созваниваемся, фиксируем позиции, объём, график и стандарты объекта.</p></div>
-      <div class="step reveal"><i class="ph ph-magnifying-glass s-ico"></i><div class="s-day">День 1–2</div><h4>Подбор из резерва</h4><p>Отбираем кандидатов под профиль: опыт, навыки, внешний вид, язык.</p></div>
+      <div class="step reveal"><i class="ph ph-magnifying-glass s-ico"></i><div class="s-day">День 1–2</div><h4>Подбор из резерва</h4><p>Отбираем кандидатов под профиль: опыт, навыки, внешний вид, язык.</p></div>
       <div class="step reveal"><i class="ph ph-file-text s-ico"></i><div class="s-day">День 2–3</div><h4>Документы и инструктаж</h4><p>Договор, медкнижки, форма, регламенты вашего предприятия.</p></div>
-      <div class="step reveal"><i class="ph ph-users-three s-ico"></i><div class="s-day">День 3</div><h4>Выход на объект</h4><p>Персонал выходит в смену, координатор подтверждает выход и остаётся на связи 24/7.</p></div>
+      <div class="step reveal"><i class="ph ph-users-three s-ico"></i><div class="s-day">День 3</div><h4>Выход на объект</h4><p>Персонал выходит в смену, координатор подтверждает выход и остаётся на связи 24/7.</p></div>
     </div>
   </div>
 </section>
@@ -445,7 +443,7 @@
           <label class="lbl" for="calc-own">Ваша полная стоимость часа штатного сотрудника, ₽</label>
           <input type="number" id="calc-own" value="620" min="200" max="2000" step="10">
         </div>
-        <p class="c-note">Полная стоимость часа штатного сотрудника — это зарплата с налогами и взносами плюс подбор, простои, отпускные и больничные. Подставьте свою цифру.</p>
+        <p class="c-note">Полная стоимость часа штатного сотрудника — это зарплата с налогами и взносами плюс подбор, простои, отпускные и больничные. Подставьте свою цифру.</p>
       </div>
       <div class="c-out">
         <div>
@@ -464,7 +462,7 @@
   <div class="container">
     <span class="eyebrow reveal">Кейсы</span>
     <h2 class="reveal">Отели, которые нас рекомендуют</h2>
-    <p class="lead reveal">Работаем с международными сетями и загородными резортами Москвы и Подмосковья. Знаем требования каждого бренда.</p>
+    <p class="lead reveal">Работаем с международными сетями и загородными резортами Москвы и Подмосковья. Знаем требования каждого бренда.</p>
     <div class="cases-grid">
       <article class="case featured reveal">
         <div class="ca-img"><img src="assets/cases/case-radisson.avif" alt="Лобби пятизвёздочного отеля в Москве" loading="lazy"></div>
@@ -480,7 +478,7 @@
         <div class="ca-body">
         <span class="ca-group">Сеть · ACCOR</span>
         <div class="ca-name">Mercure · ibis · Adagio</div>
-        <p class="ca-desc">Персонал для городских отелей сети ACCOR в Москве.</p>
+        <p class="ca-desc">Персонал для городских отелей сети ACCOR в Москве.</p>
       </div>
       </article>
       <article class="case reveal">
@@ -504,7 +502,7 @@
         <div class="ca-body">
         <span class="ca-group">Загородные отели</span>
         <div class="ca-name">Эрбелия · Рябина</div>
-        <p class="ca-desc">Постоянный персонал и усиление под высокий сезон.</p>
+        <p class="ca-desc">Постоянный персонал и усиление под высокий сезон.</p>
       </div>
       </article>
     </div>
@@ -519,11 +517,11 @@
     <div class="faq reveal">
       <details class="faq-item" open>
         <summary>Что входит в ставку за час?</summary>
-        <div class="fa-body"><p>Зарплата сотрудника, НДФЛ и взносы в социальные фонды, медкнижка, фирменная спецодежда, подбор, замена и сопровождение координатором. Вы платите ставку, умноженную на подтверждённые часы, и ничего сверху.</p></div>
+        <div class="fa-body"><p>Зарплата сотрудника, НДФЛ и взносы в социальные фонды, медкнижка, фирменная спецодежда, подбор, замена и сопровождение координатором. Вы платите ставку, умноженную на подтверждённые часы, и ничего сверху.</p></div>
       </details>
       <details class="faq-item">
         <summary>Как быстро персонал выйдет на объект?</summary>
-        <div class="fa-body"><p>Запуск проекта любой сложности занимает до 3 дней: бриф, подбор, документы, инструктаж, выход. По действующим договорам помогаем и с экстренными ситуациями в формате «сотрудник нужен уже вчера».</p></div>
+        <div class="fa-body"><p>Запуск проекта любой сложности занимает до 3 дней: бриф, подбор, документы, инструктаж, выход. По действующим договорам помогаем и с экстренными ситуациями в формате «сотрудник нужен уже вчера».</p></div>
       </details>
       <details class="faq-item">
         <summary>Сотрудники точно русскоязычные?</summary>
@@ -535,11 +533,11 @@
       </details>
       <details class="faq-item">
         <summary>Какой договор мы подписываем?</summary>
-        <div class="fa-body"><p>Договор оказания услуг между юридическими лицами. Типовой договор и оферта открыты — ссылки в подвале сайта. Все налоговые выплаты за персонал производит наша компания.</p></div>
+        <div class="fa-body"><p>Договор оказания услуг между юридическими лицами. Типовой договор и оферта открыты — ссылки в подвале сайта. Все налоговые выплаты за персонал производит наша компания.</p></div>
       </details>
       <details class="faq-item">
         <summary>Есть ли минимальный объём заказа?</summary>
-        <div class="fa-body"><p>Работаем и с разовыми сменами, и с постоянными командами. Пришлите список позиций и график: сделаем предложение точно под ваш объект.</p></div>
+        <div class="fa-body"><p>Работаем и с разовыми сменами, и с постоянными командами. Пришлите список позиций и график: сделаем предложение точно под ваш объект.</p></div>
       </details>
       <details class="faq-item">
         <summary>Где вы работаете?</summary>
@@ -556,7 +554,7 @@
       <div class="reveal">
         <span class="eyebrow">Контакты</span>
         <h2 style="color:var(--cream);">Обсудим ваш объект</h2>
-        <p class="lead">Расскажите, какие позиции нужно закрыть, и мы вернёмся с предложением в течение рабочего дня.</p>
+        <p class="lead">Расскажите, какие позиции нужно закрыть, и мы вернёмся с предложением в течение рабочего дня.</p>
         <div class="c-rows" style="margin-top:40px;">
           <div class="c-row"><div class="c-key"><i class="ph ph-phone"></i> Телефон · WhatsApp</div><a class="c-val num" href="tel:+79260505155">+7 (926) 05-05-155</a></div>
           <div class="c-row"><div class="c-key"><i class="ph ph-envelope-simple"></i> E-mail</div><a class="c-val" href="mailto:comdir@hpgroup.one">comdir@hpgroup.one</a></div>
@@ -565,7 +563,7 @@
       </div>
       <form class="lead-form reveal" id="lead-form">
         <h3>Заявка на персонал</h3>
-        <p class="lf-sub">Менеджер свяжется с вами в течение 30 минут в рабочее время.</p>
+        <p class="lf-sub">Менеджер свяжется с вами в течение 30 минут в рабочее время.</p>
         <div class="field"><label for="lf-name">Как к вам обращаться</label><input id="lf-name" type="text" name="name" required></div>
         <div class="field"><label for="lf-phone">Телефон</label><input id="lf-phone" type="tel" name="phone" placeholder="+7" required></div>
         <div class="field">
@@ -697,6 +695,8 @@
       if (useIdx < 0) return;
       img = frames[useIdx];
     }
+    /* loader виден ТОЛЬКО если юзер реально упёрся в большую дыру кадров */
+    loader.classList.toggle('active', Math.abs(useIdx - idx) > 24);
     resizeCanvas();
     const cw = lastCanvasW, ch = lastCanvasH;
     if (cw === 0 || ch === 0) return;
@@ -754,7 +754,7 @@
         top: lerp(a.top, b.top, t),
         width: lerp(a.width, b.width, t),
         height: lerp(a.height, b.height, t)
-      }, lerp(12, 0, t));
+      }, 0);
       heroText.style.transform = `translateY(${-200 * tRaw}px)`;
       heroText.style.opacity = clamp(1 - tRaw * 1.4, 0, 1);
       heroFrame.style.opacity = clamp(1 - tRaw * 2.2, 0, 1);
@@ -786,38 +786,35 @@
     showScene(getSceneFromFrame(currentDrawn));
   }
 
-  async function streamLoad() {
-    loader.classList.add('active');
-    for (let i = 0; i < Math.min(12, N); i++) {
-      await loadOne(i);
-      if (i === 0) update();
-    }
-    await Promise.all(anchors.map(a => loadOne(a)));
-    update();
-    const all = [];
-    for (let i = 0; i < N; i++) if (!frames[i] || !frames[i]._ok) all.push(i);
-    let inFlight = 0, idx = 0;
-    return new Promise(resolve => {
-      function next() {
-        while (inFlight < 8 && idx < all.length) {
-          const i = all[idx++];
-          inFlight++;
-          loadOne(i).then(() => {
-            inFlight--;
-            if (loadedCount >= N - 1) {
-              loader.classList.remove('active');
-              update();
-              resolve();
-            } else {
-              const r = wrapper.getBoundingClientRect();
-              if (r.bottom > 0 && r.top < window.innerHeight) update();
-              next();
-            }
-          });
-        }
+  /* ── Прогрессивная загрузка: scrub работает почти сразу ──
+     Очередь приоритетов: первые кадры → anchors → каждый 8-й (coarse-проход
+     по всей длине: nearestLoaded даёт плавный черновой scrub) → каждый 4-й →
+     все остальные. Concurrency 16 (HTTP/2 мультиплексирует).
+     Loader на старте НЕ показывается — у placeholder есть постер. */
+  function streamLoad() {
+    const queue = [];
+    const seen = new Set();
+    const push = i => { if (i >= 0 && i < N && !seen.has(i)) { seen.add(i); queue.push(i); } };
+    for (let i = 0; i < 8; i++) push(i);
+    anchors.forEach(push);
+    for (let i = 0; i < N; i += 8) push(i);
+    for (let i = 0; i < N; i += 4) push(i);
+    for (let i = 0; i < N; i++) push(i);
+
+    let inFlight = 0, qi = 0;
+    function next() {
+      while (inFlight < 16 && qi < queue.length) {
+        const i = queue[qi++];
+        inFlight++;
+        loadOne(i).then(() => {
+          inFlight--;
+          const r = wrapper.getBoundingClientRect();
+          if (r.bottom > 0 && r.top < window.innerHeight) update();
+          next();
+        });
       }
-      next();
-    });
+    }
+    next();
   }
   streamLoad();
 
@@ -845,6 +842,29 @@
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
   }, { threshold: 0.15 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+})();
+
+/* ── Counter scroll-in (инфографика экспертности) ── */
+(function() {
+  const els = document.querySelectorAll('.cnt');
+  if (!els.length) return;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const easeOut = t => 1 - Math.pow(1 - t, 3);
+  function animate(el) {
+    const target = +el.dataset.count, suffix = el.dataset.suffix || '';
+    if (reduce) { el.textContent = target + suffix; return; }
+    const t0 = performance.now(), dur = 1200;
+    function frame(now) {
+      const t = Math.min(1, (now - t0) / dur);
+      el.textContent = Math.round(easeOut(t) * target) + suffix;
+      if (t < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { animate(e.target); io.unobserve(e.target); } });
+  }, { threshold: 0.6 });
+  els.forEach(el => io.observe(el));
 })();
 
 /* ── Calculator ── */
