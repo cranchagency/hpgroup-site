@@ -47,15 +47,6 @@
 @font-face { font-family:'JetBrains Mono'; font-style:normal; font-weight:500; font-display:swap;
   src:url(https://cdn.jsdelivr.net/fontsource/fonts/jetbrains-mono@latest/latin-500-normal.woff2) format('woff2');
   unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2212; }
-/* Bad Script — тонкий наклонный почерк-подпись для кикеров (кириллица + латиница),
-   стиль «Katherine Plus» — тонкая связная подпись, нота «дороговизны» */
-@font-face { font-family:'Bad Script'; font-style:normal; font-weight:400; font-display:swap;
-  src:url(https://cdn.jsdelivr.net/fontsource/fonts/bad-script@latest/cyrillic-400-normal.woff2) format('woff2');
-  unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116; }
-@font-face { font-family:'Bad Script'; font-style:normal; font-weight:400; font-display:swap;
-  src:url(https://cdn.jsdelivr.net/fontsource/fonts/bad-script@latest/latin-400-normal.woff2) format('woff2');
-  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2212; }
-
 :root {
   --ink: #0F1011;
   --cream: #F5F2EC;
@@ -71,7 +62,6 @@
   --cine-bg: #0d0a07;
   --font-sans: 'Manrope', -apple-system, 'Segoe UI', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
-  --font-script: 'Bad Script', 'Segoe Script', cursive;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -529,26 +519,3 @@ section.dark .std:not(.hero-std):hover { background: rgba(245,242,236,0.09); }
 .subhero .crumb { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.14em;
   text-transform: uppercase; color: var(--grey-500); margin-bottom: 28px; display: block; }
 .subhero .crumb a { color: var(--copper); text-decoration: none; }
-
-/* ── Рукописные кикеры-подзаголовки (Bad Script) ──────────────────
-   Заменяют JetBrains-Mono капс-лейблы над секциями на рукописный акцент.
-   Текст в HTML уже набран с заглавной строчными — снимаем uppercase.
-   Цифры/ставки/телефон/бейджи/формы остаются в моно (читаемость). */
-.eyebrow, .logowall .lw-cap, .exp-brands .eb-cap, .std .s-k, .step .s-day,
-.case .ca-group, .pain .p-tag, .subhero .crumb {
-  font-family: var(--font-script);
-  text-transform: none;
-  letter-spacing: 0.005em;
-  font-weight: 400;
-}
-.eyebrow { font-size: clamp(22px, 2.1vw, 30px); line-height: 1.1; }
-.logowall .lw-cap { font-size: 25px; }
-.exp-brands .eb-cap { font-size: 22px; }
-.std .s-k { font-size: 23px; line-height: 1; }
-.step .s-day { font-size: 23px; }
-.case .ca-group { font-size: 21px; line-height: 1.1; }
-.pain .p-tag { font-size: 23px; }
-.subhero .crumb { font-size: 22px; }
-.subhero .crumb a { font-family: var(--font-script); }
-/* кикер на copper-карточке: copper-на-copper нечитаем → кремовый */
-.std.hero-std .s-k { color: rgba(255,255,255,0.92); }
