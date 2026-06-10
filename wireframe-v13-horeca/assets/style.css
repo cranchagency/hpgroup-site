@@ -530,7 +530,7 @@ section.dark .std:not(.hero-std):hover { background: rgba(245,242,236,0.09); }
   text-transform: uppercase; color: var(--grey-500); margin-bottom: 28px; display: block; }
 .subhero .crumb a { color: var(--copper); text-decoration: none; }
 
-/* ── Рукописные кикеры-подзаголовки (Marck Script) ──────────────────
+/* ── Рукописные кикеры-подзаголовки (Bad Script) ──────────────────
    Заменяют JetBrains-Mono капс-лейблы над секциями на рукописный акцент.
    Текст в HTML уже набран с заглавной строчными — снимаем uppercase.
    Цифры/ставки/телефон/бейджи/формы остаются в моно (читаемость). */
