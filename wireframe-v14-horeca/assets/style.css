@@ -150,19 +150,18 @@ header.site.on-dark .logo .logo-on-dark { display: block; }
 footer.site .f-brand .f-logo-full { height: 50px; width: auto; display: block; }
 /* Галочка «знак доверия» слева + ® «запатентовано» справа на логотипе (запрос клиента) */
 header.site .logo { position: relative; }
-.lb-check { position: absolute; top: -6px; left: -13px; width: 15px; height: 15px; border-radius: 50%; background: var(--copper); color: #fff; font-size: 9px; line-height: 15px; text-align: center; font-weight: 900; box-shadow: 0 1px 3px rgba(0,0,0,0.18); }
-.lb-reg { position: absolute; top: -5px; right: -14px; font-size: 11px; font-weight: 700; color: var(--copper); line-height: 1; }
-header.site.on-dark .lb-reg { color: #E9A567; }
-@media (max-width: 480px) { .lb-check { left: -10px; top: -5px; width: 13px; height: 13px; line-height: 13px; font-size: 8px; } .lb-reg { right: -11px; } }
+.lb-reg { position: absolute; top: 5px; right: -9px; font-size: 11px; font-weight: 700; color: #1a1a1a; line-height: 1; }
+header.site.on-dark .lb-reg { color: #fff; }
+@media (max-width: 480px) { .lb-reg { right: -4px; top: 1px; } }
 header.site nav { display: flex; gap: 26px; }
 header.site nav a { color: var(--grey-700); text-decoration: none; font-size: 14.5px; font-weight: 600; transition: color 0.2s; }
 header.site nav a:hover, header.site nav a.active { color: var(--copper); }
 /* «Вакансии» — раздел в разработке: замок + пилюля «скоро», некликабельно */
 .nav-soon { display: inline-flex; align-items: center; gap: 7px; cursor: default; color: var(--grey-500); font-size: 14.5px; font-weight: 600; }
-.nav-soon .lock { width: 12px; height: 12px; flex: none; opacity: 0.65; }
+.nav-soon .lock, .mm-soon .lock { width: 12px; height: 12px; flex: none; opacity: 0.65; }
 .nav-soon i { font-family: var(--font-mono); font-style: normal; font-size: 9px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--copper); background: rgba(184,118,60,0.12); padding: 2px 6px; border-radius: 4px; line-height: 1; }
 header.site.on-dark nav .nav-soon { color: rgba(245,242,236,0.5); }
-.mobile-menu .mm-soon { justify-content: flex-start; gap: 9px; color: var(--grey-500); cursor: default; }
+.mobile-menu .mm-soon { display: flex; align-items: center; justify-content: flex-start; gap: 9px; padding: 15px clamp(20px,5vw,40px); font-size: 16px; font-weight: 600; border-bottom: 1px solid rgba(15,16,17,0.05); color: var(--grey-500); cursor: default; }
 .mobile-menu .mm-soon:hover, .mobile-menu .mm-soon:active { background: transparent; color: var(--grey-500); }
 header.site .right { display: flex; align-items: center; gap: 18px; }
 header.site .phone { font-family: var(--font-mono); font-size: 13.5px; font-weight: 500; color: var(--ink); text-decoration: none; transition: color 0.3s; white-space: nowrap; }
